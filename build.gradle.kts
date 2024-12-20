@@ -1,6 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm") version "2.1.0"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "9.0.0-beta4"
 }
 
 group = "Heyblock0712"
@@ -47,6 +49,11 @@ tasks.processResources {
 }
 
 tasks {
+    withType<ShadowJar> {
+        // 重新命名 NBT-API 库
+        relocate("de.tr7zw.changeme.nbtapi", "hn.blacknight0981.nbtapi")
+    }
+
     shadowJar {
         archiveClassifier.set("")
     }

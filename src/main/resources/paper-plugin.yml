@@ -4,3 +4,11 @@ main: heyblock0712.hn.HNItemFun
 api-version: '1.21'
 authors: [ HN ]
 description: is MinecraftHUD WAILA
+
+
+dependencies:
+  server:
+    HNLib:
+      load: BEFORE
+      required: true
+      join-classpath: true

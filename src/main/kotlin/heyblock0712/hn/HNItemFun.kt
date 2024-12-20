@@ -1,9 +1,17 @@
 package heyblock0712.hn
 
 import de.tr7zw.changeme.nbtapi.NBT
+import heyblock0712.hn.commands.ItemCommand
+import hn.blacknight0981.hNLib.HNLib
+import hn.blacknight0981.hNLib.commands.HNCommandManager
 import org.bukkit.plugin.java.JavaPlugin
 
 class HNItemFun : JavaPlugin() {
+
+    companion object {
+        var commandManager: HNCommandManager? = null
+            private set
+    }
 
     override fun onEnable() {
         logger.info("正在啟動 HNItemFun...")
@@ -13,6 +21,10 @@ class HNItemFun : JavaPlugin() {
             server.pluginManager.disablePlugin(this)
             return
         }
+
+        commandManager = HNCommandManager()
+
+        HNLib.getCommandManager().register(ItemCommand())
 
         logger.info("啟動完畢!")
     }
