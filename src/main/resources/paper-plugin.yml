@@ -1,0 +1,6 @@
+name: HNItemFun
+version: '0.0.1'
+main: heyblock0712.hn.HNItemFun
+api-version: '1.21'
+authors: [ HN ]
+description: is MinecraftHUD WAILA
