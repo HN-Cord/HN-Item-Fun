@@ -1,5 +1,6 @@
 package heyblock0712.hn.data
 
+import heyblock0712.hn.utils.PDC
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
@@ -14,7 +15,7 @@ interface ItemIO {
         val item = item
         val meta = item.itemMeta
 
-        val key = NamespacedKey("hn", "item_id")
+        val key = PDC.ID.key
         meta.persistentDataContainer.set(key, PersistentDataType.STRING, id)
 
         item.setItemMeta(meta)

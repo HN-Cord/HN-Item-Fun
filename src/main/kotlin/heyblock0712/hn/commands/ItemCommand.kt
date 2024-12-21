@@ -20,9 +20,9 @@ class ItemCommand : HNCommandIO{
 
         val subCommand = arge[0]
         val subArgs = arrayOfNulls<String>(arge.size - 1)
-        System.arraycopy(arge, 1, subArgs, 0, arge.size)
+        System.arraycopy(arge, 1, subArgs, 0, subArgs.size)
 
-        return commandManager!!.execute(subCommand, sender, arge)
+        return commandManager!!.execute(subCommand, sender, subArgs)
     }
 
     override fun tabComplete(sender: CommandSender, args: Array<out String>): MutableList<String> {
