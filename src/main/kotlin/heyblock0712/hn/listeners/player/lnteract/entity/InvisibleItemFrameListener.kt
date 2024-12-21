@@ -24,7 +24,7 @@ class InvisibleItemFrameListener: Listener {
 
         val potionMeta = item.itemMeta as? PotionMeta
         potionMeta?.let {
-            if (it.basePotionType != PotionType.LONG_INVISIBILITY) return
+            if (it.basePotionType != PotionType.INVISIBILITY) return
 
             entity.isVisible = false
             player.inventory.setItemInMainHand(null)
