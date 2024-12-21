@@ -1,11 +1,11 @@
 package heyblock0712.hn.listeners.block
 
-import com.destroystokyo.paper.MaterialTags
 import heyblock0712.hn.data.block.User
 import heyblock0712.hn.events.HNBlockPlacerEvent
 import heyblock0712.hn.utils.PDC
 import heyblock0712.hn.utils.getPersistentData
 import heyblock0712.hn.utils.setPersistentData
+import io.papermc.paper.event.block.BlockPreDispenseEvent
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -14,6 +14,8 @@ import org.bukkit.block.Dispenser
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockDispenseEvent
+import org.bukkit.event.entity.ItemSpawnEvent
+import org.bukkit.inventory.ItemStack
 
 class UserListener : Listener {
     @EventHandler
@@ -41,12 +43,12 @@ class UserListener : Listener {
     }
 
     @EventHandler
-    fun onDispense(event: BlockDispenseEvent) {
+    fun onDispense(event: BlockPreDispenseEvent) {
         val block = event.block
         val id = getPersistentData(block, PDC.ID.key)?: return
         if (id != User.id) return
 
-        val item = event.item
+        val item = event.itemStack
         if (!item.type.isBlock) return
 
         val state = block.state
@@ -61,11 +63,21 @@ class UserListener : Listener {
 
             placeLog.block.type = item.type
 
-            if ((item.amount - 1) == 0) {
-                event.isCancelled = true
-                val inventory = state.inventory
-                inventory.removeItem(item)
+            val inventory = state.inventory
+            for (i in inventory.contents.indices) {
+                val invItem = inventory.contents[i]
+
+                if (invItem != null && invItem.isSimilar(item)) {
+                    if (invItem.amount > 1) {
+                        invItem.amount -= 1
+                    } else {
+                        inventory.setItem(i, ItemStack(Material.AIR))
+                    }
+                    break
+                }
             }
+
+            event.isCancelled = true
         }
     }
 }
