@@ -7,6 +7,7 @@ import heyblock0712.hn.utils.getPersistentData
 import heyblock0712.hn.utils.setPersistentData
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.block.Container
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -32,7 +33,7 @@ class HNBlockListener: Listener {
 
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
-        val player = event.player
+        val player = event.player //Todo: 未來給予自訂事件用的
         val block = event.block
 
         if (block.type == Material.AIR) return
@@ -42,9 +43,19 @@ class HNBlockListener: Listener {
 
         event.isDropItems = false
 
+        val state = block.state
+        if (state is Container) {
+            val inventory = state.inventory
+
+            for (item in inventory.contents) {
+                if (item == null || item.type == Material.AIR) continue
+                block.world.dropItemNaturally(block.location, item)
+            }
+
+            inventory.clear()
+        }
+
         val item = ItemManager.getItemStack(id) ?: return
         block.world.dropItemNaturally(block.location, item)
-
-
     }
 }
