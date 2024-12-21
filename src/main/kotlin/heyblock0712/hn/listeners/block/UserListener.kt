@@ -8,13 +8,11 @@ import heyblock0712.hn.utils.setPersistentData
 import io.papermc.paper.event.block.BlockPreDispenseEvent
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
-import org.bukkit.NamespacedKey
+import org.bukkit.block.Block
 import org.bukkit.block.Container
 import org.bukkit.block.Dispenser
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.block.BlockDispenseEvent
-import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.inventory.ItemStack
 
 class UserListener : Listener {
@@ -24,10 +22,11 @@ class UserListener : Listener {
         if (id != User.id) return
 
         val block = event.block
-        val key = NamespacedKey("hn", "mode")
+        val key = User.MODE
 
-        val modeID = User.Mode.Place.type
-        val modeName = User.Mode.Place.display
+        val mode = User.Mode.Place
+        val modeID = mode.type
+        val modeName = mode.display
 
         val state = block.state
         if (state is Container) {
@@ -60,24 +59,29 @@ class UserListener : Listener {
             val placeLog = block.location.add(facing.direction)
 
             if (placeLog.block.type != Material.AIR) return
+            val mode = getPersistentData(block, User.MODE)?: return
 
-            placeLog.block.type = item.type
-
-            val inventory = state.inventory
-            for (i in inventory.contents.indices) {
-                val invItem = inventory.contents[i]
-
-                if (invItem != null && invItem.isSimilar(item)) {
-                    if (invItem.amount > 1) {
-                        invItem.amount -= 1
-                    } else {
-                        inventory.setItem(i, ItemStack(Material.AIR))
-                    }
-                    break
-                }
-            }
+            if (mode == User.Mode.Place.type) onPlaceMode(placeLog.block, item, state)
 
             event.isCancelled = true
+        }
+    }
+
+    private fun onPlaceMode(block: Block, itemStack: ItemStack, dispenser: Dispenser) {
+        block.type = itemStack.type
+
+        val inventory = dispenser.inventory
+        for (i in inventory.contents.indices) {
+            val invItem = inventory.contents[i]
+
+            if (invItem != null && invItem.isSimilar(itemStack)) {
+                if (invItem.amount > 1) {
+                    invItem.amount -= 1
+                } else {
+                    inventory.setItem(i, ItemStack(Material.AIR))
+                }
+                break
+            }
         }
     }
 }
