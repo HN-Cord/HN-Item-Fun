@@ -1,6 +1,5 @@
 package heyblock0712.hn.commands.item
 
-import heyblock0712.hn.HNItemFun.Companion.commandManager
 import heyblock0712.hn.data.ItemManager
 import hn.blacknight0981.hNLib.commands.HNCommandIO
 import net.kyori.adventure.text.Component

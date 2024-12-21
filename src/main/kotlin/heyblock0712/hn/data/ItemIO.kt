@@ -1,7 +1,6 @@
 package heyblock0712.hn.data
 
 import heyblock0712.hn.utils.PDC
-import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
 

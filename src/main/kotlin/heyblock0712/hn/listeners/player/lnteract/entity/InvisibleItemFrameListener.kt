@@ -16,7 +16,7 @@ class InvisibleItemFrameListener: Listener {
         val player = e.player
         val entity = e.rightClicked
 
-        if (entity !is ItemFrame || !player.isSneaking) return; // 蹲下 互動
+        if (entity !is ItemFrame || !player.isSneaking) return // 蹲下 互動
         if (!entity.isVisible) return // 隱形狀態
 
         val item = player.inventory.itemInMainHand
@@ -43,7 +43,7 @@ class InvisibleItemFrameListener: Listener {
         val player = e.player
         val entity = e.rightClicked
 
-        if (entity !is ItemFrame || !player.isSneaking) return;
+        if (entity !is ItemFrame || !player.isSneaking) return
 
         if (entity.isVisible) return
 
