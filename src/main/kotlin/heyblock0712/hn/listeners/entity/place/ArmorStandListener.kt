@@ -1,23 +1,21 @@
 package heyblock0712.hn.listeners.entity.place
 
-import org.bukkit.Material
 import org.bukkit.entity.ArmorStand
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityPlaceEvent
+import org.bukkit.event.player.PlayerInteractAtEntityEvent
 
 class ArmorStandListener : Listener {
+
     @EventHandler
-    fun onArmorStand(event: EntityPlaceEvent) {
-        val player = event.player?: return
-        val entity = event.entity
+    fun onArmorStand(event: PlayerInteractAtEntityEvent) {
+        val entity = event.rightClicked
 
         if (entity !is ArmorStand) return
+        val player = event.player
+        val pos = event.clickedPosition
 
-        val item = player.inventory.itemInOffHand
-        if (item.type != Material.STICK && item.amount < 3) return
+        player.sendMessage("你點擊了盔甲座 位置 $pos")
 
-        item.amount -= 2
-        entity.setArms(true)
     }
 }

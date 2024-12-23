@@ -7,10 +7,10 @@ import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemRarity
 import org.bukkit.inventory.ItemStack
 
-class User : ItemIO {
+class MechanicUser : ItemIO {
     companion object {
-        var id: String = "user"
-        val displayName = Component.translatable("hn.block.user", "使用者")
+        var id: String = "mechanic_user"
+        val displayName = Component.translatable("hn.block.mechanic_user", "機械用戶")
 
         val MODE = NamespacedKey("hn", "mode")
 
@@ -19,9 +19,15 @@ class User : ItemIO {
     enum class Mode(val type: String, val display : Component) {
         Break("break", Component.translatable("hn.mode.break", "破壞")),
         Place("place", Component.translatable("hn.mode.place", "放置"));
+
+        companion object {
+            fun fromType(type: String): Mode? {
+                return entries.find { it.type == type }
+            }
+        }
     }
 
-    override val id: String = User.id
+    override val id: String = MechanicUser.id
 
     override val item: ItemStack = ItemStack(Material.DISPENSER)
 
