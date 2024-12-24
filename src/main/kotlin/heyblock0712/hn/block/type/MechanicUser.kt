@@ -11,7 +11,8 @@ class MechanicUser(
     val dispenserData: org.bukkit.block.data.type.Dispenser,
     val target: Block,
     val mode: MechanicUser.Mode,
-    val itemStack: ItemStack,
+    val action: MechanicUser.Action,
+    val itemStack: ItemStack? = null,
 ) {
 
     fun playDispenseFailSound() {
