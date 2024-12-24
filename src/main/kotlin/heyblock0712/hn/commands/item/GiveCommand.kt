@@ -1,6 +1,6 @@
 package heyblock0712.hn.commands.item
 
-import heyblock0712.hn.data.ItemManager
+import heyblock0712.hn.inventory.ItemManager
 import hn.blacknight0981.hNLib.commands.HNCommandIO
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor

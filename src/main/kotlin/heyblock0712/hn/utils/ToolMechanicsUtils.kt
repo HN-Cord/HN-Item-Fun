@@ -6,6 +6,10 @@ import org.bukkit.inventory.meta.Damageable
 import kotlin.random.Random
 
 object ToolMechanicsUtils {
+
+    /**
+     * 模擬 耐久消耗 會引用附魔去計算
+     */
     fun applyToolDurabilityDamage(itemStack: ItemStack): Boolean {
         val itemMeta = itemStack.itemMeta
         if (itemMeta !is Damageable) return false

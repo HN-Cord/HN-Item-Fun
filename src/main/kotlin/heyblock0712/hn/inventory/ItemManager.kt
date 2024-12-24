@@ -1,9 +1,9 @@
-package heyblock0712.hn.data
+package heyblock0712.hn.inventory
 
 import org.bukkit.inventory.ItemStack
 
 object ItemManager {
-    private val items : MutableMap<String ,ItemIO> = HashMap()
+    private val items : MutableMap<String , ItemIO> = HashMap()
 
     fun registerItem(item: ItemIO) {
         item.init()
@@ -20,7 +20,7 @@ object ItemManager {
         return item.item.clone()
     }
 
-    fun getItems(): Map<String,ItemIO> {
+    fun getItems(): Map<String, ItemIO> {
         return items
     }
 }

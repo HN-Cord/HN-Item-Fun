@@ -1,6 +1,6 @@
 package heyblock0712.hn.listeners.block
 
-import heyblock0712.hn.data.block.MechanicUser
+import heyblock0712.hn.inventory.item.MechanicUser
 import heyblock0712.hn.events.HNBlockPlacerEvent
 import heyblock0712.hn.utils.PDC
 import heyblock0712.hn.utils.ToolMechanicsUtils
@@ -19,12 +19,12 @@ class MechanicUserListener : Listener {
     @EventHandler
     fun onHNPlacer(event: HNBlockPlacerEvent) {
         val id = event.id
-        if (id != MechanicUser.id) return
+        if (id != MechanicUser.ID) return
 
         val block = event.block
         val key = MechanicUser.MODE
 
-        val mode = MechanicUser.Mode.Break
+        val mode = MechanicUser.Mode.BREAK
         val modeID = mode.type
         val modeName = mode.display
 
@@ -45,7 +45,7 @@ class MechanicUserListener : Listener {
     fun onDispense(event: BlockPreDispenseEvent) {
         val block = event.block
         val id = getPersistentData(block, PDC.ID.key)?: return
-        if (id != MechanicUser.id) return
+        if (id != MechanicUser.ID) return
         val item = event.itemStack
 
         // 檢查漏斗狀態
@@ -58,16 +58,16 @@ class MechanicUserListener : Listener {
             val modeString = getPersistentData(block, MechanicUser.MODE)?: return
 
             val mode = MechanicUser.Mode.fromType(modeString) ?: return
-            val mechanicUser = heyblock0712.hn.block.MechanicUser(dispenser, blockData, target.block, mode, item)
+            val mechanicUser = heyblock0712.hn.block.type.MechanicUser(dispenser, blockData, target.block, mode, item)
 
             when (mode) {
-                MechanicUser.Mode.Place -> onPlaceMode(event, mechanicUser)
-                MechanicUser.Mode.Break -> onBreakMode(event, mechanicUser)
+                MechanicUser.Mode.PLACE -> onPlaceMode(event, mechanicUser)
+                MechanicUser.Mode.BREAK -> onBreakMode(event, mechanicUser)
             }
         }
     }
 
-    private fun onPlaceMode(event: BlockPreDispenseEvent ,mechanicUser: heyblock0712.hn.block.MechanicUser) {
+    private fun onPlaceMode(event: BlockPreDispenseEvent ,mechanicUser: heyblock0712.hn.block.type.MechanicUser) {
         val itemStack = mechanicUser.itemStack
         val target = mechanicUser.target
         val dispenser = mechanicUser.dispenser
@@ -93,7 +93,7 @@ class MechanicUserListener : Listener {
         event.isCancelled = true
     }
 
-    private fun onBreakMode(event: BlockPreDispenseEvent, mechanicUser: heyblock0712.hn.block.MechanicUser) {
+    private fun onBreakMode(event: BlockPreDispenseEvent, mechanicUser: heyblock0712.hn.block.type.MechanicUser) {
         val itemStack = mechanicUser.itemStack
         val target = mechanicUser.target
 
@@ -101,6 +101,8 @@ class MechanicUserListener : Listener {
         if (check) {
             val tool = ToolMechanicsUtils.applyToolDurabilityDamage(itemStack)
             if (tool) mechanicUser.playToolBreakSound()
+        } else {
+            mechanicUser.playDispenseFailSound()
         }
 
         event.isCancelled = true

@@ -1,6 +1,6 @@
 package heyblock0712.hn.listeners.block
 
-import heyblock0712.hn.data.ItemManager
+import heyblock0712.hn.inventory.ItemManager
 import heyblock0712.hn.events.HNBlockPlacerEvent
 import heyblock0712.hn.utils.PDC
 import heyblock0712.hn.utils.getPersistentData

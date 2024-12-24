@@ -1,6 +1,6 @@
-package heyblock0712.hn.block
+package heyblock0712.hn.block.type
 
-import heyblock0712.hn.data.block.MechanicUser
+import heyblock0712.hn.inventory.item.MechanicUser
 import org.bukkit.Sound
 import org.bukkit.block.Block
 import org.bukkit.block.Dispenser
@@ -23,6 +23,6 @@ class MechanicUser(
     }
 
     fun playToolBreakSound() {
-        dispenser.block.world.playSound(target.location, Sound.BLOCK_STONE_BREAK, 1.0f, 1.0f)
+        dispenser.block.world.playSound(target.location, Sound.ENTITY_ITEM_BREAK, 1.0f, 0.9f)
     }
 }
